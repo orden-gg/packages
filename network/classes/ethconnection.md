@@ -54,6 +54,7 @@ Responsible for
 - [setDiagnosticUpdater](EthConnection.md#setdiagnosticupdater)
 - [setRpcUrl](EthConnection.md#setrpcurl)
 - [signMessage](EthConnection.md#signmessage)
+- [signMessageObject](EthConnection.md#signmessageobject)
 - [startPolling](EthConnection.md#startpolling)
 - [stopPolling](EthConnection.md#stoppolling)
 - [subscribeToContractEvents](EthConnection.md#subscribetocontractevents)
@@ -63,13 +64,14 @@ Responsible for
 
 ### constructor
 
-• **new EthConnection**(`provider`)
+• **new EthConnection**(`provider`, `blockNumber`)
 
 #### Parameters
 
-| Name       | Type              |
-| :--------- | :---------------- |
-| `provider` | `JsonRpcProvider` |
+| Name          | Type              |
+| :------------ | :---------------- |
+| `provider`    | `JsonRpcProvider` |
+| `blockNumber` | `number`          |
 
 ## Properties
 
@@ -84,7 +86,7 @@ of whatever blockchain we're connected to.
 
 ### balanceInterval
 
-• `Private` **balanceInterval**: `undefined` \| `Timeout`
+• `Private` **balanceInterval**: `undefined` \| `Timer`
 
 Interval which reloads the balance of the account that this EthConnection is in charge of.
 
@@ -92,7 +94,7 @@ Interval which reloads the balance of the account that this EthConnection is in 
 
 ### blockNumber
 
-• `Private` **blockNumber**: `number` = `0`
+• `Private` **blockNumber**: `number`
 
 The current latest block number.
 
@@ -145,7 +147,7 @@ Publishes an event whenever the network's auto gas prices change.
 
 ### gasPricesInterval
 
-• `Private` **gasPricesInterval**: `undefined` \| `Timeout`
+• `Private` **gasPricesInterval**: `undefined` \| `Timer`
 
 Store this so we can cancel the interval.
 
@@ -228,10 +230,10 @@ transaction speeds, and given the user's gas price setting.
 
 #### Parameters
 
-| Name              | Type        |
-| :---------------- | :---------- |
-| `gasPrices`       | `GasPrices` |
-| `gasPriceSetting` | `string`    |
+| Name              | Type                         |
+| :---------------- | :--------------------------- |
+| `gasPrices`       | `GasPrices`                  |
+| `gasPriceSetting` | `string` \| `AutoGasSetting` |
 
 #### Returns
 
@@ -573,6 +575,31 @@ Signs a string, or throws an error if a signer has not been set.
 #### Returns
 
 `Promise`<`string`\>
+
+---
+
+### signMessageObject
+
+▸ **signMessageObject**<`T`\>(`obj`): `Promise`<`SignedMessage`<`T`\>\>
+
+Returns a version of this message signed by the account that this {@code EthConnectio} is
+logged in as.
+
+#### Type parameters
+
+| Name |
+| :--- |
+| `T`  |
+
+#### Parameters
+
+| Name  | Type |
+| :---- | :--- |
+| `obj` | `T`  |
+
+#### Returns
+
+`Promise`<`SignedMessage`<`T`\>\>
 
 ---
 
